@@ -3,7 +3,7 @@
 A minimal, secure authentication service built with **Node.js**, **Express**, **JWT**, and **SQLite**, featuring:
 
 - User registration and login
-- Secure password hashing with bcrypt
+- Secure password hashing with argon2
 - Access and Refresh tokens using JWT
 - Token-based route protection
 - Refresh token rotation and logout endpoint
@@ -14,8 +14,8 @@ A minimal, secure authentication service built with **Node.js**, **Express**, **
 
 - Node.js
 - Express
-- SQLite (in-memory for demo purposes)
-- bcrypt (for password hashing)
+- MySQL 
+- argon2 (for password hashing)
 - jsonwebtoken (for token generation and validation)
 
 ---
