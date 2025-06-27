@@ -10,7 +10,7 @@ import argon2 from "argon2";
 
 
 export async function login(req: Request, res: Response) {
-    const body = req.body as Partial<User>;
+    const body = req.body as User;
 
     const { error } = loginSchema.validate(body, { abortEarly: false });
 
@@ -20,6 +20,13 @@ export async function login(req: Request, res: Response) {
     const user = (await UserRepo.find({ email: body.email }))[0];
 
     if (!user)
+        throw new ValidationError([{
+            message: "Incorrect email or password",
+            path: [],
+            type: ""
+        }]);
+
+    if (!(await argon2.verify(user.password, body.password)))
         throw new ValidationError([{
             message: "Incorrect email or password",
             path: [],
