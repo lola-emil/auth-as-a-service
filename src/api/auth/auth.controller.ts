@@ -29,7 +29,7 @@ export async function login(req: Request, res: Response) {
     const accessToken = await signToken({ id: user.id }, ACCESS_TOKEN_SECRET, { expiresIn: "15m" });
     const refreshToken = await signToken({ id: user.id }, REFRESH_TOKEN_SECRET, { expiresIn: "1d" });
 
-    await RefreshTokenRepo.insert({token: refreshToken})
+    await RefreshTokenRepo.insert({ token: refreshToken });
 
     return res.status(200).json({
         accessToken,
@@ -45,7 +45,7 @@ export async function register(req: Request, res: Response) {
     if (!!error)
         throw new ValidationError(error.details);
 
-    body.password = await argon2.hash(body.password)
+    body.password = await argon2.hash(body.password);
 
     const result = await UserRepo.insert(body);
 
@@ -70,12 +70,14 @@ export async function refresh(req: Request, res: Response) {
         return res.status(403).send("Invalid token");
 
     try {
+        console.log(matchedToken.token);
         const decoded = await verifyToken(matchedToken.token, REFRESH_TOKEN_SECRET);
 
         const newAccessToken = await signToken(decoded, ACCESS_TOKEN_SECRET);
 
         return res.status(200).json({ accessToken: newAccessToken });
     } catch (error) {
+        console.log(error);
         return res.status(403).send("Token expired or invalid");
     }
 }
