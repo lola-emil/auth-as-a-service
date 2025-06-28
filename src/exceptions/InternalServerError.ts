@@ -1,7 +1,12 @@
 
 
 export default class InternalServerError extends Error {
-    constructor(message?: string) {
+    public name = "Internal Server Error";
+    public statusCode = 500;
+    public cause?: unknown;
+
+    constructor(message?: string, cause?: unknown) {
         super(message);
+        this.cause = cause;
     }
 }

@@ -21,7 +21,7 @@ app.use(helmet());
 app.use(apiRoute);
 
 // 404 Error
-app.use((req, res) => {
+app.use((req, _res) => {
     throw new NotFoundError(`Can't ${req.method} ${req.originalUrl}`);
 });
 

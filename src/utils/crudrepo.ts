@@ -89,7 +89,7 @@ export default class CrudRepo<T extends {}> {
 
             return await sql;
         } catch (error) {
-            throw new InternalServerError("Invalid Query");
+            throw new InternalServerError("Invalid Query", error);
             
         }
     }
