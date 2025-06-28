@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
-import UserRepo from "../../repositories/user";
+import UserRepo, { patchUserSchema, User } from "../../repositories/user";
 import NotFoundError from "../../exceptions/NotFoundError";
+import ValidationError from "../../exceptions/ValidationError";
 
 
 export async function getUser(req: Request, res: Response) {
@@ -15,5 +16,15 @@ export async function getUser(req: Request, res: Response) {
 }
 
 export async function updateUser(req: Request, res: Response) {
+    const id = parseInt(req.params.id);
+    const body = req.body as Partial<User> ?? {};
 
+    const { error } = patchUserSchema.validate(body, { abortEarly: false });
+
+    if (error)
+        throw new ValidationError(error.details);
+
+    const user = await UserRepo.update(id, body);
+
+    return res.status(200).json(user);
 }

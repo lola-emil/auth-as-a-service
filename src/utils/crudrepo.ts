@@ -96,7 +96,6 @@ export default class CrudRepo<T extends {}> {
 
     async insert(data: Partial<T>, trx?: Knex.Transaction) {
         const query = db(this.tableName).insert(data);
-        console.log(query);
         if (trx)
             query.transacting(trx);
 

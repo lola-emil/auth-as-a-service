@@ -23,6 +23,8 @@ export const userSchema = Joi.object({
     password: Joi.string().alphanum().min(6)
 });
 
+export const patchUserSchema = userSchema.min(1);
+
 export const loginSchema = Joi.object({
     email: Joi.string().required(),
     password: Joi.string().required()

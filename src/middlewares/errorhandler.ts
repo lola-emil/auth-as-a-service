@@ -27,7 +27,6 @@ export default function errorHandler(
     }
 
     else {
-        console.log(error);
         Logger.error(`Internal Server Error: ${error.message}\n${error.stack}`);
         return res.status(500).json({
             message: "Internal Server Error"

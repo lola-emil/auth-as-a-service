@@ -5,7 +5,7 @@ import * as Controller from "./user.controller";
 const router = Router();
 
 router.get("/", asyncHandler(Controller.getUser));
-router.post("/", asyncHandler(Controller.updateUser));
+router.patch("/:id", asyncHandler(Controller.updateUser));
 
 
 export default router;

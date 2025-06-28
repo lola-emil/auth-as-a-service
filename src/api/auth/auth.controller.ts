@@ -77,14 +77,12 @@ export async function refresh(req: Request, res: Response) {
         return res.status(403).send("Invalid token");
 
     try {
-        console.log(matchedToken.token);
         const decoded = await verifyToken(matchedToken.token, REFRESH_TOKEN_SECRET);
 
         const newAccessToken = await signToken(decoded, ACCESS_TOKEN_SECRET);
 
         return res.status(200).json({ accessToken: newAccessToken });
     } catch (error) {
-        console.log(error);
         return res.status(403).send("Token expired or invalid");
     }
 }
