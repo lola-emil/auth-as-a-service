@@ -52,6 +52,15 @@ export async function register(req: Request, res: Response) {
     if (!!error)
         throw new ValidationError(error.details);
 
+    const matchedUser = (await UserRepo.find({ email: body.email }))[0];
+
+    if (!!matchedUser)
+        throw new ValidationError([{
+            message: "Email already taken.",
+            path: [],
+            type: ""
+        }]);
+
     body.password = await argon2.hash(body.password);
 
     const result = await UserRepo.insert(body);
